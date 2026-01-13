@@ -19,6 +19,15 @@ interface Props {
 const Landing: React.FC<Props> = ({ onNavigate }) => {
   const { isAuthenticated } = useAuth();
 
+  // লোগো ডেটা
+  const partners = [
+    { name: "ACH Transfer", logo: "https://api.tremendous.com/product_images/ET0ZVETV5ILN/card" },
+    { name: "Apple Card", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" },
+    { name: "Visa", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" },
+    { name: "Mastercard", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" },
+    { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-slate-900 selection:bg-violet-100 selection:text-violet-700 overflow-x-hidden font-inter">
       {/* Decorative Background Blobs - Light Version */}
@@ -102,19 +111,41 @@ const Landing: React.FC<Props> = ({ onNavigate }) => {
           </div>
         </section>
 
+        {/* 🚀 INFINITE LOGO SCROLL SECTION (Real Image Logos) */}
+        <div className="py-16 bg-slate-50/50 border-y border-slate-100 overflow-hidden relative">
+          <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white to-transparent z-10" />
+          
+          <div className="flex animate-infinite-scroll gap-20 items-center">
+            {/* Infinite loop for smooth scrolling */}
+            {[...partners, ...partners, ...partners].map((item, index) => (
+              <div key={index} className="flex items-center gap-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default flex-none group">
+                <div className="h-12 w-20 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={item.logo} 
+                    alt={item.name} 
+                    className="max-h-full max-w-full object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform" 
+                  />
+                </div>
+                <span className="text-lg font-black italic tracking-tighter uppercase text-slate-400 group-hover:text-slate-900 transition-colors">{item.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Stats Section - High Quality Grid */}
         <section className="py-24 border-y border-slate-100 bg-slate-50/30">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
             <div className="text-center">
-              <div className="text-4xl font-black text-slate-900 mb-2 italic">$2.5M+</div>
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">$300+</div>
               <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Total Payouts</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-black text-slate-900 mb-2 italic">3 Min</div>
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">30 Min</div>
               <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Fast Processing</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-black text-slate-900 mb-2 italic">50+</div>
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">5+</div>
               <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Card Types</div>
             </div>
             <div className="text-center">
@@ -173,10 +204,28 @@ const Landing: React.FC<Props> = ({ onNavigate }) => {
               <button className="hover:text-violet-600 transition-colors">Terms</button>
               <button className="hover:text-violet-600 transition-colors">Legal</button>
             </div>
-            <p className="text-slate-400 text-[10px] font-black tracking-widest uppercase">&copy; 2026 PREMIUM EXCHANGE GROUP</p>
+            <p className="text-slate-400 text-[10px] font-black tracking-widest uppercase">&copy; 2026 surveytocash</p>
           </div>
         </footer>
       </div>
+
+      {/* 🟢 CSS For Infinite Scroll Animation */}
+      <style>{`
+        @keyframes infinite-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-33.33%); }
+        }
+        .animate-infinite-scroll {
+          display: flex;
+          width: fit-content;
+          animation: infinite-scroll 40s linear infinite;
+        }
+        .animate-infinite-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+
     </div>
   );
 };
