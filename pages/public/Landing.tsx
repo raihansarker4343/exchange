@@ -1,110 +1,182 @@
 import React from 'react';
-import { useAuth } from '../../context/AuthContext'; // AuthContext যোগ করুন
-import { ArrowRight, ShieldCheck, Zap, CreditCard } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { 
+  ArrowRight, 
+  ShieldCheck, 
+  Zap, 
+  CreditCard, 
+  ChevronRight, 
+  Star,
+  Globe,
+  Lock,
+  ArrowUpRight
+} from 'lucide-react';
 
 interface Props {
   onNavigate: (page: string) => void;
 }
 
 const Landing: React.FC<Props> = ({ onNavigate }) => {
-  const { isAuthenticated } = useAuth(); // চেক করুন ইউজার লগইন কি না
+  const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Navigation */}
-      <nav className="w-full py-6 px-6 lg:px-12 flex justify-between items-center max-w-7xl mx-auto">
-        <div className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-          survey<span className="font-light text-slate-600">tocash</span>
-        </div>
-        <div className="flex gap-4">
-          {!isAuthenticated ? (
-            <>
-              <button 
-                onClick={() => onNavigate('login')}
-                className="text-slate-600 hover:text-violet-600 font-medium transition-colors"
-              >
-                Log In
-              </button>
-              <button 
-                onClick={() => onNavigate('register')}
-                className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-violet-200"
-              >
-                Get Started
-              </button>
-            </>
-          ) : (
-            <button 
-              onClick={() => onNavigate('dashboard')}
-              className="bg-violet-600 text-white px-5 py-2 rounded-full font-medium"
-            >
-              Go to Dashboard
-            </button>
-          )}
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-violet-100 selection:text-violet-700 overflow-x-hidden font-inter">
+      {/* Decorative Background Blobs - Light Version */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-violet-50 blur-[120px] rounded-full -z-10 opacity-70" />
+      
+      {/* Navigation - Fixed/Sticky Header */}
+      <nav className="fixed top-0 left-0 right-0 z-[100] backdrop-blur-md border-b border-slate-100 bg-white/80">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <div className="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-200 group-hover:rotate-6 transition-transform">
+              <Zap className="w-6 h-6 text-white fill-white" />
+            </div>
+            <span className="text-2xl font-black tracking-tighter italic text-slate-900">
+              SURVEY<span className="text-violet-600">TOCASH</span>
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-8">
+            <div className="hidden md:flex gap-8 text-sm font-semibold text-slate-500 uppercase tracking-wider">
+              <button className="hover:text-violet-600 transition-colors">Rates</button>
+              <button className="hover:text-violet-600 transition-colors">Safety</button>
+              <button className="hover:text-violet-600 transition-colors">Help</button>
+            </div>
+            <div className="flex gap-4">
+              {!isAuthenticated ? (
+                <>
+                  <button onClick={() => onNavigate('login')} className="px-5 py-2 text-sm font-bold text-slate-600 hover:text-violet-600 transition-colors">Login</button>
+                  <button onClick={() => onNavigate('register')} className="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-violet-600 transition-all shadow-xl shadow-slate-200 active:scale-95">Get Started</button>
+                </>
+              ) : (
+                <button onClick={() => onNavigate('dashboard')} className="bg-violet-600 text-white px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-violet-700 transition-all shadow-lg shadow-violet-200">
+                  My Dashboard <ChevronRight className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center text-center px-4 py-20 relative overflow-hidden">
-        {/* Abstract Background Blobs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-violet-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob animation-delay-4000"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
-            Turn your <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">Gift Cards</span> into Cash instantly.
-          </h1>
-          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
-            The most secure and premium platform to exchange Apple, Visa, MasterCard, and more for BDT. Get paid via bKash, Rocket, or Nagad within minutes.
-          </p>
-          
-          <button 
-            onClick={() => onNavigate('register')}
-            className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-slate-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-slate-800"
-          >
-            Start Exchanging
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
-
-        {/* Features Grid */}
-        <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10 px-4">
-          <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-xl hover:shadow-2xl transition-all">
-            <div className="w-12 h-12 bg-violet-100 rounded-lg flex items-center justify-center mb-6 text-violet-600">
-              <ShieldCheck className="w-6 h-6" />
+      {/* Main Content Area - Added padding top to account for fixed header */}
+      <div className="pt-[72px]">
+        {/* Hero Section */}
+        <section className="relative pt-24 pb-32 px-6">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-violet-50 border border-violet-100 px-4 py-2 rounded-full mb-8 shadow-sm">
+              <Star className="w-4 h-4 text-violet-600 fill-violet-600" />
+              <span className="text-[10px] font-black tracking-[0.2em] uppercase text-violet-700">Trusted by 10,000+ Active Traders</span>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Secure Transactions</h3>
-            <p className="text-slate-600">Bank-grade security protocols ensuring your cards and data are always protected.</p>
-          </div>
-          
-          <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-xl hover:shadow-2xl transition-all">
-            <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6 text-indigo-600">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Fast Payouts</h3>
-            <p className="text-slate-600">We process legitimate cards instantly. Receive money in your mobile wallet in minutes.</p>
-          </div>
+            
+            <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[1.05] tracking-tight text-slate-900 italic">
+              Exchange your <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-indigo-600 to-fuchsia-600">Gift Cards</span> for Cash.
+            </h1>
+            
+            <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
+              Join the most reliable platform in Bangladesh to sell Apple, Visa, and Amazon cards. 
+              Receive payments in <span className="text-slate-900 font-bold">2-5 minutes</span> via bKash or Nagad.
+            </p>
 
-          <div className="bg-white/60 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-xl hover:shadow-2xl transition-all">
-            <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-6 text-pink-600">
-              <CreditCard className="w-6 h-6" />
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <button 
+                onClick={() => onNavigate('register')}
+                className="w-full sm:w-auto px-12 py-5 bg-slate-900 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 hover:bg-violet-600 hover:shadow-2xl hover:shadow-violet-200 transition-all hover:-translate-y-1 active:scale-95"
+              >
+                Start Trading <ArrowRight className="w-6 h-6" />
+              </button>
+              <div className="flex items-center gap-4 group cursor-pointer">
+                <div className="flex -space-x-3">
+                  {[1,2,3].map(i => (
+                      <div key={i} className="w-10 h-10 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">
+                        ID
+                      </div>
+                  ))}
+                </div>
+                <div className="text-left">
+                    <div className="text-sm font-black text-slate-900 flex items-center gap-1">4.9/5 Rating <ArrowUpRight className="w-3 h-3 text-violet-600"/></div>
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Global Reviews</div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Best Rates</h3>
-            <p className="text-slate-600">We offer the most competitive exchange rates in the market updated daily.</p>
           </div>
-        </div>
-      </main>
+        </section>
 
-      <footer className="bg-white border-t border-slate-200 py-6 mt-auto relative z-20">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-          <p>&copy; {new Date().getFullYear()} surveytocash. All rights reserved.</p>
-          <div className="flex gap-6">
-            <button className="hover:text-violet-600 transition-colors">Privacy Policy</button>
-            <button className="hover:text-violet-600 transition-colors">Terms of Service</button>
-            <button className="hover:text-violet-600 transition-colors">Contact Support</button>
+        {/* Stats Section - High Quality Grid */}
+        <section className="py-24 border-y border-slate-100 bg-slate-50/30">
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div className="text-center">
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">$2.5M+</div>
+              <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Total Payouts</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">3 Min</div>
+              <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Fast Processing</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">50+</div>
+              <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Card Types</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-black text-slate-900 mb-2 italic">100%</div>
+              <div className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Safe & Secure</div>
+            </div>
           </div>
-        </div>
-      </footer>
+        </section>
+
+        {/* Feature Grid - Figma Clean Style */}
+        <section className="py-32 px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-10 rounded-[40px] bg-white border border-slate-100 hover:border-violet-200 hover:shadow-2xl hover:shadow-violet-100/50 transition-all duration-500 group">
+              <div className="w-16 h-16 bg-violet-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-8 h-8 text-violet-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mb-4 italic">No-Risk Policy</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">Your assets are protected by our proprietary escrow system. Zero scams, total transparency.</p>
+            </div>
+
+            <div className="p-10 rounded-[40px] bg-slate-900 border border-slate-800 hover:shadow-2xl hover:shadow-slate-300 transition-all duration-500 group">
+              <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
+                <Globe className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-black text-white mb-4 italic">Global Reach</h3>
+              <p className="text-slate-400 font-medium leading-relaxed">Selling from USA, Canada, or Europe? We accept international gift cards with the best rates in BDT.</p>
+            </div>
+
+            <div className="p-10 rounded-[40px] bg-white border border-slate-100 hover:border-violet-200 hover:shadow-2xl hover:shadow-violet-100/50 transition-all duration-500 group">
+              <div className="w-16 h-16 bg-violet-50 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                <Lock className="w-8 h-8 text-violet-600" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mb-4 italic">Instant Payouts</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">Automated bank transfers and mobile wallet payments. Get your money right when you need it.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="py-32 px-6">
+          <div className="max-w-5xl mx-auto bg-gradient-to-br from-violet-600 to-indigo-700 rounded-[50px] p-16 text-center text-white relative overflow-hidden shadow-2xl shadow-violet-200">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+            <h2 className="text-4xl md:text-6xl font-black mb-8 italic">Ready to make your <br/>first trade?</h2>
+            <button onClick={() => onNavigate('register')} className="bg-white text-violet-700 px-12 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform active:scale-95 shadow-xl">
+              Register Account
+            </button>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 px-6 border-t border-slate-100 bg-white">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-xl font-black italic tracking-tighter uppercase">SURVEY<span className="text-violet-600">TOCASH</span></div>
+            <div className="flex gap-10 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+              <button className="hover:text-violet-600 transition-colors">Privacy</button>
+              <button className="hover:text-violet-600 transition-colors">Terms</button>
+              <button className="hover:text-violet-600 transition-colors">Legal</button>
+            </div>
+            <p className="text-slate-400 text-[10px] font-black tracking-widest uppercase">&copy; 2026 PREMIUM EXCHANGE GROUP</p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };
