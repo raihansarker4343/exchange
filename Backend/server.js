@@ -193,13 +193,24 @@ app.get('/api/admin/users', authenticate, isAdmin, async (req, res) => {
   res.json(users);
 });
 
+// --- Admin Routes সেকশনে এটি পরিবর্তন করুন ---
+
 app.put('/api/admin/users/:id/toggle', authenticate, isAdmin, async (req, res) => {
   const { isActive } = req.body;
-  const user = await prisma.user.update({
-    where: { id: req.params.id },
-    data: { isActive }
-  });
-  res.json(user);
+  const { id } = req.params; // id এখানে string হিসেবে আসে
+
+  try {
+    const user = await prisma.user.update({
+      where: { 
+        id: parseInt(id) // এখানেও parseInt যোগ করতে হবে
+      },
+      data: { isActive }
+    });
+    res.json(user);
+  } catch (error) {
+    console.error("User toggle error:", error);
+    res.status(500).json({ error: 'Failed to update user status' });
+  }
 });
 
 app.get('/api/admin/stats', authenticate, isAdmin, async (req, res) => {
