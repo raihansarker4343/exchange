@@ -124,7 +124,7 @@ const Login: React.FC<Props> = ({ onNavigate }) => {
              className="text-xs font-medium text-slate-500 hover:text-violet-600 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white hover:shadow-sm"
            >
              <LogIn className="w-3 h-3" />
-             Demo Admin Access
+             
            </button>
         </div>
       </div>
