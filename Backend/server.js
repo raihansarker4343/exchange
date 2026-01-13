@@ -17,7 +17,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:5173",
-      "https://frontend-1zcq.onrender.com"
+      "https://frontend-1zcq.onrender.com",
+      "https://surveytocash.xyz"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
