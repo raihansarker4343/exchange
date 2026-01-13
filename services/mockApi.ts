@@ -143,4 +143,30 @@ async getPaymentMethods() {
 
     return handleResponse(res);
   },
+
+
+   // src/services/mockApi.ts এর শেষে এগুলো যোগ করুন
+
+// সব ইউজারদের দেখার জন্য (AdminUsers.tsx এ ব্যবহৃত)
+async getAllUsers() {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/admin/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return handleResponse(res);
+},
+
+// ইউজার ব্যান বা একটিভ করার জন্য (AdminUsers.tsx এ ব্যবহৃত)
+async toggleUserStatus(id: string | number, isActive: boolean) {
+  const token = getToken();
+  const res = await fetch(`${API_URL}/api/admin/users/${id}/toggle`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ isActive }),
+  });
+  return handleResponse(res);
+}
 };
