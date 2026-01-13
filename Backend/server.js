@@ -17,7 +17,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:5173",
-      "https://verbose-parakeet-4j57jvqv5x9jfxr-3000.app.github.dev"
+      "https://frontend-1zcq.onrender.com"
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
