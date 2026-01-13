@@ -97,13 +97,14 @@ app.get('/api/config/rates', async (req, res) => {
   res.json(rates);
 });
 
+// server.js এর এই অংশে parseInt যোগ করুন
 app.put('/api/config/rates', authenticate, isAdmin, async (req, res) => {
   const rates = req.body; 
   try {
     for (const r of rates) {
       await prisma.giftCardRate.update({
-        where: { id: r.id },
-        data: { rate: r.rate, isEnabled: r.isEnabled }
+        where: { id: parseInt(r.id) }, // এখানেও parseInt জরুরি
+        data: { rate: parseFloat(r.rate), isEnabled: r.isEnabled }
       });
     }
     res.json({ success: true });
