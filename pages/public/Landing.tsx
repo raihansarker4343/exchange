@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext'; // AuthContext যোগ করুন
 import { ArrowRight, ShieldCheck, Zap, CreditCard } from 'lucide-react';
 
 interface Props {
@@ -6,6 +7,8 @@ interface Props {
 }
 
 const Landing: React.FC<Props> = ({ onNavigate }) => {
+  const { isAuthenticated } = useAuth(); // চেক করুন ইউজার লগইন কি না
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Navigation */}
@@ -14,18 +17,29 @@ const Landing: React.FC<Props> = ({ onNavigate }) => {
           survey<span className="font-light text-slate-600">tocash</span>
         </div>
         <div className="flex gap-4">
-          <button 
-            onClick={() => onNavigate('login')}
-            className="text-slate-600 hover:text-violet-600 font-medium transition-colors"
-          >
-            Log In
-          </button>
-          <button 
-            onClick={() => onNavigate('register')}
-            className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-violet-200"
-          >
-            Get Started
-          </button>
+          {!isAuthenticated ? (
+            <>
+              <button 
+                onClick={() => onNavigate('login')}
+                className="text-slate-600 hover:text-violet-600 font-medium transition-colors"
+              >
+                Log In
+              </button>
+              <button 
+                onClick={() => onNavigate('register')}
+                className="bg-violet-600 hover:bg-violet-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-lg shadow-violet-200"
+              >
+                Get Started
+              </button>
+            </>
+          ) : (
+            <button 
+              onClick={() => onNavigate('dashboard')}
+              className="bg-violet-600 text-white px-5 py-2 rounded-full font-medium"
+            >
+              Go to Dashboard
+            </button>
+          )}
         </div>
       </nav>
 
