@@ -1,7 +1,7 @@
 // src/services/mockApi.ts
 // FULL REAL API WRAPPER (Auth + Admin)
 
-const API_URL = "https://ominous-guacamole-69qg95v5q67j2px9-5000.app.github.dev";
+const API_URL = "https://backend-lbxu.onrender.com";
 /* =====================
    Helpers
 ===================== */
