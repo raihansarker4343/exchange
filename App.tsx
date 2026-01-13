@@ -45,12 +45,19 @@ const AppContent: React.FC = () => {
     );
   }
 
-  if (!isAuthenticated) {
-    // Simple public routing
-    if (currentPage === 'login') return <Login onNavigate={setCurrentPage} />;
-    if (currentPage === 'register') return <Register onNavigate={setCurrentPage} />;
-    return <Landing onNavigate={setCurrentPage} />;
-  }
+  // App.tsx এর AppContent এর ভিতরে এটি চেক করুন
+if (!isAuthenticated) {
+  if (currentPage === 'login') return <Login onNavigate={setCurrentPage} />;
+  if (currentPage === 'register') return <Register onNavigate={setCurrentPage} />;
+  return <Landing onNavigate={setCurrentPage} />;
+}
+
+// ইউজার লগইন থাকলে লেআউট লোড হবে
+return (
+  <Layout activePage={currentPage} onNavigate={setCurrentPage}>
+    {renderPage()}
+  </Layout>
+);
 
   // Protected Routing Logic
   const renderPage = () => {
