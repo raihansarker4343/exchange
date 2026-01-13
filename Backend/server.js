@@ -162,13 +162,27 @@ app.get('/api/admin/transactions', authenticate, isAdmin, async (req, res) => {
   res.json(trx);
 });
 
+// আপনার বর্তমান কোড পরিবর্তন করে এটি বসান:
 app.put('/api/admin/transactions/:id/status', authenticate, isAdmin, async (req, res) => {
-  const { status, note } = req.body;
-  const trx = await prisma.transaction.update({
-    where: { id: req.params.id },
-    data: { status, adminNote: note }
-  });
-  res.json(trx);
+  try {
+    const { status, note } = req.body;
+    const { id } = req.params;
+
+    const trx = await prisma.transaction.update({
+      where: { 
+        id: parseInt(id) // এখানে অবশ্যই parseInt দিয়ে সংখ্যায় রূপান্তর করতে হবে
+      },
+      data: { 
+        status: status, 
+        adminNote: note || "" 
+      }
+    });
+
+    res.json(trx);
+  } catch (error) {
+    console.error("Update Error:", error);
+    res.status(500).json({ error: 'Failed to update status', details: error.message });
+  }
 });
 
 app.get('/api/admin/users', authenticate, isAdmin, async (req, res) => {
