@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
+import FloatingContact from '../../components/FloatingContact';
 import {
   ArrowRight,
   ShieldCheck,
@@ -239,6 +240,9 @@ const Landing: React.FC<Props> = ({ onNavigate }) => {
             </button>
           </div>
         </section>
+        
+        {/* 🟢 এখানে FloatingContact যুক্ত করুন */}
+      <FloatingContact />
 
         {/* Footer */}
         <footer className="py-12 px-6 border-t border-slate-100 bg-white">
