@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { UserRole } from './types';
 import Layout from './components/Layout';
-import { Toaster, toast } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 // User Pages
 import Dashboard from './pages/user/Dashboard';
@@ -22,10 +22,10 @@ import Landing from './pages/public/Landing';
 
 const AppContent: React.FC = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('landing');
 
   useEffect(() => {
-    // Reset page on role change or login
+    // লগইন করার পর রোল অনুযায়ী পেজ সেট করা
     if (isAuthenticated) {
       if (user?.role === UserRole.ADMIN) {
         setCurrentPage('admin-dashboard');
@@ -33,7 +33,8 @@ const AppContent: React.FC = () => {
         setCurrentPage('dashboard');
       }
     } else {
-      // Default public page state if needed
+      // লগআউট থাকলে ডিফল্ট ল্যান্ডিং পেজ
+      setCurrentPage('landing');
     }
   }, [isAuthenticated, user]);
 
@@ -45,23 +46,18 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // App.tsx এর AppContent এর ভিতরে এটি চেক করুন
-if (!isAuthenticated) {
-  if (currentPage === 'login') return <Login onNavigate={setCurrentPage} />;
-  if (currentPage === 'register') return <Register onNavigate={setCurrentPage} />;
-  return <Landing onNavigate={setCurrentPage} />;
-}
-
-// ইউজার লগইন থাকলে লেআউট লোড হবে
-return (
-  <Layout activePage={currentPage} onNavigate={setCurrentPage}>
-    {renderPage()}
-  </Layout>
-);
-
-  // Protected Routing Logic
+  // --- Protected Routing Logic ---
   const renderPage = () => {
-    // Admin Routes
+    // ইউজার লগইন না থাকলে পাবলিক পেজগুলো রেন্ডার হবে
+    if (!isAuthenticated) {
+      switch (currentPage) {
+        case 'login': return <Login onNavigate={setCurrentPage} />;
+        case 'register': return <Register onNavigate={setCurrentPage} />;
+        default: return <Landing onNavigate={setCurrentPage} />;
+      }
+    }
+
+    // এডমিন পেজগুলো
     if (user?.role === UserRole.ADMIN) {
       switch (currentPage) {
         case 'admin-dashboard': return <AdminDashboard />;
@@ -72,7 +68,7 @@ return (
       }
     }
 
-    // User Routes
+    // সাধারণ ইউজার পেজগুলো
     switch (currentPage) {
       case 'dashboard': return <Dashboard onNavigate={setCurrentPage} />;
       case 'submit': return <SubmitCard onSuccess={() => setCurrentPage('history')} />;
@@ -81,6 +77,12 @@ return (
     }
   };
 
+  // যদি লগইন না থাকে তবে লেআউট ছাড়া পেজ রেন্ডার হবে (যেমন: ল্যান্ডিং, লগইন)
+  if (!isAuthenticated) {
+    return renderPage();
+  }
+
+  // লগইন থাকলে লেআউটের ভেতরে পেজ রেন্ডার হবে
   return (
     <Layout activePage={currentPage} onNavigate={setCurrentPage}>
       {renderPage()}
@@ -92,7 +94,6 @@ export default function App() {
   return (
     <AuthProvider>
       <Toaster position="top-right" toastOptions={{
-        className: '',
         style: {
           background: '#1e293b',
           color: '#fff',
